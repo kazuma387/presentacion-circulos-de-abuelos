@@ -67,78 +67,84 @@ const App: React.FC = () => {
     switch (slideType) {
       case "cover":
         return (
-          <div className="flex flex-col items-center justify-center h-full w-full text-center space-y-4 md:space-y-8 p-4 md:p-12 overflow-y-auto">
-            
-            {/* Sección de 3 Imágenes Alineadas */}
-            <div className="flex flex-row items-center justify-center gap-2 md:gap-8 mb-2 md:mb-4 relative z-10 w-full px-2">
-              {COVER_IMAGES.map((imgUrl, index) => (
-                <div key={index} className="h-20 w-20 sm:h-28 sm:w-28 md:h-48 md:w-48 bg-white/40 backdrop-blur-md rounded-xl md:rounded-2xl shadow-lg md:shadow-xl border border-white/60 p-2 md:p-4 flex items-center justify-center overflow-hidden transition-transform hover:scale-105 duration-300 group">
-                  <img 
-                    src={imgUrl} 
-                    alt={`Logo Institucional ${index + 1}`} 
-                    className="w-full h-full object-contain filter drop-shadow-sm group-hover:drop-shadow-md transition-all"
-                  />
-                </div>
-              ))}
-            </div>
+          // SOLUCIÓN SCROLL: Contenedor externo con scroll
+          <div className="h-full w-full overflow-y-auto scrollbar-hide">
+             {/* Contenedor interno con min-h-full para centrado seguro */}
+            <div className="min-h-full w-full flex flex-col items-center justify-center text-center space-y-4 md:space-y-8 p-4 md:p-12">
+              
+              {/* Sección de 3 Imágenes Alineadas */}
+              <div className="flex flex-row items-center justify-center gap-2 md:gap-8 mb-2 md:mb-4 relative z-10 w-full px-2 mt-4 md:mt-0">
+                {COVER_IMAGES.map((imgUrl, index) => (
+                  <div key={index} className="h-20 w-20 sm:h-28 sm:w-28 md:h-48 md:w-48 bg-white/40 backdrop-blur-md rounded-xl md:rounded-2xl shadow-lg md:shadow-xl border border-white/60 p-2 md:p-4 flex items-center justify-center overflow-hidden transition-transform hover:scale-105 duration-300 group">
+                    <img 
+                      src={imgUrl} 
+                      alt={`Logo Institucional ${index + 1}`} 
+                      className="w-full h-full object-contain filter drop-shadow-sm group-hover:drop-shadow-md transition-all"
+                    />
+                  </div>
+                ))}
+              </div>
 
-            <div className="bg-white/60 backdrop-blur-sm p-4 md:p-8 rounded-xl md:rounded-2xl border border-white/50 shadow-sm max-w-4xl w-full mx-auto">
-              <h1 className="text-xl sm:text-3xl md:text-6xl font-extrabold text-slate-900 mb-2 md:mb-6 drop-shadow-sm leading-tight">{APP_TITLE}</h1>
-              <p className="text-sm sm:text-lg md:text-3xl text-slate-600 font-medium">{APP_SUBTITLE}</p>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-8 w-full max-w-2xl mt-2 md:mt-4 mx-auto">
-              <StatCard 
-                title="Total Participantes" 
-                value={totalParticipants} 
-                description="Registro Global"
-              />
-              <StatCard 
-                title="Sedes Activas" 
-                value={locationCount} 
-                description="Ubicaciones"
-              />
+              <div className="bg-white/60 backdrop-blur-sm p-4 md:p-8 rounded-xl md:rounded-2xl border border-white/50 shadow-sm max-w-4xl w-full mx-auto">
+                <h1 className="text-xl sm:text-3xl md:text-6xl font-extrabold text-slate-900 mb-2 md:mb-6 drop-shadow-sm leading-tight">{APP_TITLE}</h1>
+                <p className="text-sm sm:text-lg md:text-3xl text-slate-600 font-medium">{APP_SUBTITLE}</p>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-8 w-full max-w-2xl mt-2 md:mt-4 mx-auto pb-4 md:pb-0">
+                <StatCard 
+                  title="Total Participantes" 
+                  value={totalParticipants} 
+                  description="Registro Global"
+                />
+                <StatCard 
+                  title="Sedes Activas" 
+                  value={locationCount} 
+                  description="Ubicaciones"
+                />
+              </div>
             </div>
           </div>
         );
 
       case "table":
         return (
-          <div className="h-full w-full flex flex-col justify-center p-4 md:p-12 overflow-y-auto">
-            <div className="w-full max-w-5xl mx-auto flex-col flex justify-center h-full">
-              <div className="overflow-x-auto bg-white/80 backdrop-blur-md shadow-lg rounded-xl border border-white/50 w-full">
-                <table className="min-w-full divide-y divide-slate-200/60 text-sm md:text-xl">
-                  <thead className="bg-slate-50/80">
-                    <tr>
-                      <th className="px-4 py-3 md:px-8 md:py-6 text-left font-bold text-slate-500 uppercase tracking-wider">Ubicación</th>
-                      <th className="px-4 py-3 md:px-8 md:py-6 text-right font-bold text-slate-500 uppercase tracking-wider">Cantidad</th>
-                      <th className="px-4 py-3 md:px-8 md:py-6 text-right font-bold text-slate-500 uppercase tracking-wider">%</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-200/60">
-                    {GRANDPARENTS_DATA.map((item, index) => (
-                      <tr key={item.name} className={index % 2 === 0 ? 'bg-transparent' : 'bg-slate-50/40'}>
-                        <td className="px-4 py-3 md:px-8 md:py-6 whitespace-nowrap font-medium text-slate-900 flex items-center">
-                          <span className="w-3 h-3 md:w-5 md:h-5 rounded-full mr-2 md:mr-4 shadow-sm shrink-0" style={{ backgroundColor: item.color }}></span>
-                          <span className="truncate">{item.name}</span>
-                        </td>
-                        <td className="px-4 py-3 md:px-8 md:py-6 whitespace-nowrap text-slate-700 text-right font-medium">
-                          {item.value}
-                        </td>
-                        <td className="px-4 py-3 md:px-8 md:py-6 whitespace-nowrap text-slate-700 text-right font-medium">
-                          {((item.value / totalParticipants) * 100).toFixed(1)}%
-                        </td>
+          <div className="h-full w-full overflow-y-auto scrollbar-hide">
+            <div className="min-h-full w-full flex flex-col justify-center p-4 md:p-12">
+              <div className="w-full max-w-5xl mx-auto flex-col flex justify-center">
+                <div className="overflow-x-auto bg-white/80 backdrop-blur-md shadow-lg rounded-xl border border-white/50 w-full">
+                  <table className="min-w-full divide-y divide-slate-200/60 text-sm md:text-xl">
+                    <thead className="bg-slate-50/80">
+                      <tr>
+                        <th className="px-4 py-3 md:px-8 md:py-6 text-left font-bold text-slate-500 uppercase tracking-wider">Ubicación</th>
+                        <th className="px-4 py-3 md:px-8 md:py-6 text-right font-bold text-slate-500 uppercase tracking-wider">Cantidad</th>
+                        <th className="px-4 py-3 md:px-8 md:py-6 text-right font-bold text-slate-500 uppercase tracking-wider">%</th>
                       </tr>
-                    ))}
-                  </tbody>
-                  <tfoot className="bg-slate-100/80 font-bold text-slate-900 text-base md:text-xl">
-                    <tr>
-                      <td className="px-4 py-3 md:px-8 md:py-6">Total General</td>
-                      <td className="px-4 py-3 md:px-8 md:py-6 text-right">{totalParticipants}</td>
-                      <td className="px-4 py-3 md:px-8 md:py-6 text-right">100%</td>
-                    </tr>
-                  </tfoot>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200/60">
+                      {GRANDPARENTS_DATA.map((item, index) => (
+                        <tr key={item.name} className={index % 2 === 0 ? 'bg-transparent' : 'bg-slate-50/40'}>
+                          <td className="px-4 py-3 md:px-8 md:py-6 whitespace-nowrap font-medium text-slate-900 flex items-center">
+                            <span className="w-3 h-3 md:w-5 md:h-5 rounded-full mr-2 md:mr-4 shadow-sm shrink-0" style={{ backgroundColor: item.color }}></span>
+                            <span className="truncate">{item.name}</span>
+                          </td>
+                          <td className="px-4 py-3 md:px-8 md:py-6 whitespace-nowrap text-slate-700 text-right font-medium">
+                            {item.value}
+                          </td>
+                          <td className="px-4 py-3 md:px-8 md:py-6 whitespace-nowrap text-slate-700 text-right font-medium">
+                            {((item.value / totalParticipants) * 100).toFixed(1)}%
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    <tfoot className="bg-slate-100/80 font-bold text-slate-900 text-base md:text-xl">
+                      <tr>
+                        <td className="px-4 py-3 md:px-8 md:py-6">Total General</td>
+                        <td className="px-4 py-3 md:px-8 md:py-6 text-right">{totalParticipants}</td>
+                        <td className="px-4 py-3 md:px-8 md:py-6 text-right">100%</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
@@ -161,8 +167,10 @@ const App: React.FC = () => {
 
       case "analysis":
         return (
-          <div className="h-full w-full p-4 md:p-12 flex flex-col justify-center overflow-y-auto">
-             <AnalysisSection data={GRANDPARENTS_DATA} total={totalParticipants} />
+          <div className="h-full w-full overflow-y-auto scrollbar-hide">
+             <div className="min-h-full w-full flex flex-col justify-center p-4 md:p-12">
+               <AnalysisSection data={GRANDPARENTS_DATA} total={totalParticipants} />
+             </div>
           </div>
         );
 
@@ -207,10 +215,9 @@ const App: React.FC = () => {
       {/* MAIN CONTENT AREA */}
       {/* 
         flex-1 ensures it takes all remaining height.
-        isChartSlide ? 'overflow-hidden' : 'overflow-hidden' 
-        We use relative to position content. 
+        The content inside renderSlideContent handles its own scrolling.
       */}
-      <main className={`flex-1 relative z-10 w-full flex flex-col ${isChartSlide ? 'overflow-hidden' : 'overflow-hidden'}`}>
+      <main className="flex-1 relative z-10 w-full flex flex-col overflow-hidden">
         {renderSlideContent()}
       </main>
 
