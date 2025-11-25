@@ -4,7 +4,7 @@ import CustomBarChart from './components/CustomBarChart';
 import CustomPieChart from './components/CustomPieChart';
 import StatCard from './components/StatCard';
 import AnalysisSection from './components/AnalysisSection';
-import { Activity, ChevronLeft, ChevronRight, Presentation } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Presentation } from 'lucide-react';
 
 // ==================================================================================
 // CONFIGURACIÓN DE IMAGEN DE FONDO
@@ -67,12 +67,12 @@ const App: React.FC = () => {
     switch (slideType) {
       case "cover":
         return (
-          <div className="flex flex-col items-center justify-center h-full text-center space-y-8">
+          <div className="flex flex-col items-center justify-center h-full w-full text-center space-y-4 md:space-y-8 p-4 md:p-12 overflow-y-auto">
             
             {/* Sección de 3 Imágenes Alineadas */}
-            <div className="flex items-center justify-center gap-8 mb-4 relative z-10 w-full px-12">
+            <div className="flex flex-row items-center justify-center gap-2 md:gap-8 mb-2 md:mb-4 relative z-10 w-full px-2">
               {COVER_IMAGES.map((imgUrl, index) => (
-                <div key={index} className="h-48 w-48 bg-white/40 backdrop-blur-md rounded-2xl shadow-xl border border-white/60 p-4 flex items-center justify-center overflow-hidden transition-transform hover:scale-105 duration-300 group">
+                <div key={index} className="h-20 w-20 sm:h-28 sm:w-28 md:h-48 md:w-48 bg-white/40 backdrop-blur-md rounded-xl md:rounded-2xl shadow-lg md:shadow-xl border border-white/60 p-2 md:p-4 flex items-center justify-center overflow-hidden transition-transform hover:scale-105 duration-300 group">
                   <img 
                     src={imgUrl} 
                     alt={`Logo Institucional ${index + 1}`} 
@@ -82,12 +82,12 @@ const App: React.FC = () => {
               ))}
             </div>
 
-            <div className="bg-white/60 backdrop-blur-sm p-8 rounded-2xl border border-white/50 shadow-sm max-w-4xl w-full">
-              <h1 className="text-5xl font-extrabold text-slate-900 mb-6 drop-shadow-sm">{APP_TITLE}</h1>
-              <p className="text-2xl text-slate-600 font-medium">{APP_SUBTITLE}</p>
+            <div className="bg-white/60 backdrop-blur-sm p-4 md:p-8 rounded-xl md:rounded-2xl border border-white/50 shadow-sm max-w-4xl w-full mx-auto">
+              <h1 className="text-xl sm:text-3xl md:text-6xl font-extrabold text-slate-900 mb-2 md:mb-6 drop-shadow-sm leading-tight">{APP_TITLE}</h1>
+              <p className="text-sm sm:text-lg md:text-3xl text-slate-600 font-medium">{APP_SUBTITLE}</p>
             </div>
             
-            <div className="grid grid-cols-2 gap-8 w-full max-w-2xl mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-8 w-full max-w-2xl mt-2 md:mt-4 mx-auto">
               <StatCard 
                 title="Total Participantes" 
                 value={totalParticipants} 
@@ -104,137 +104,152 @@ const App: React.FC = () => {
 
       case "table":
         return (
-          <div className="h-full flex flex-col justify-center">
-            <div className="overflow-hidden bg-white/80 backdrop-blur-md shadow-sm rounded-xl border border-white/50">
-              <table className="min-w-full divide-y divide-slate-200/60 text-lg">
-                <thead className="bg-slate-50/80">
-                  <tr>
-                    <th className="px-8 py-5 text-left text-sm font-bold text-slate-500 uppercase tracking-wider">Ubicación</th>
-                    <th className="px-8 py-5 text-right text-sm font-bold text-slate-500 uppercase tracking-wider">Cantidad</th>
-                    <th className="px-8 py-5 text-right text-sm font-bold text-slate-500 uppercase tracking-wider">% del Total</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200/60">
-                  {GRANDPARENTS_DATA.map((item, index) => (
-                    <tr key={item.name} className={index % 2 === 0 ? 'bg-transparent' : 'bg-slate-50/40'}>
-                      <td className="px-8 py-5 whitespace-nowrap font-medium text-slate-900 flex items-center">
-                        <span className="w-4 h-4 rounded-full mr-4 shadow-sm" style={{ backgroundColor: item.color }}></span>
-                        {item.name}
-                      </td>
-                      <td className="px-8 py-5 whitespace-nowrap text-slate-700 text-right font-medium">
-                        {item.value}
-                      </td>
-                      <td className="px-8 py-5 whitespace-nowrap text-slate-700 text-right font-medium">
-                        {((item.value / totalParticipants) * 100).toFixed(1)}%
-                      </td>
+          <div className="h-full w-full flex flex-col justify-center p-4 md:p-12 overflow-y-auto">
+            <div className="w-full max-w-5xl mx-auto flex-col flex justify-center h-full">
+              <div className="overflow-x-auto bg-white/80 backdrop-blur-md shadow-lg rounded-xl border border-white/50 w-full">
+                <table className="min-w-full divide-y divide-slate-200/60 text-sm md:text-xl">
+                  <thead className="bg-slate-50/80">
+                    <tr>
+                      <th className="px-4 py-3 md:px-8 md:py-6 text-left font-bold text-slate-500 uppercase tracking-wider">Ubicación</th>
+                      <th className="px-4 py-3 md:px-8 md:py-6 text-right font-bold text-slate-500 uppercase tracking-wider">Cantidad</th>
+                      <th className="px-4 py-3 md:px-8 md:py-6 text-right font-bold text-slate-500 uppercase tracking-wider">%</th>
                     </tr>
-                  ))}
-                </tbody>
-                <tfoot className="bg-slate-100/80 font-bold text-slate-900">
-                  <tr>
-                    <td className="px-8 py-5">Total General</td>
-                    <td className="px-8 py-5 text-right">{totalParticipants}</td>
-                    <td className="px-8 py-5 text-right">100%</td>
-                  </tr>
-                </tfoot>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-slate-200/60">
+                    {GRANDPARENTS_DATA.map((item, index) => (
+                      <tr key={item.name} className={index % 2 === 0 ? 'bg-transparent' : 'bg-slate-50/40'}>
+                        <td className="px-4 py-3 md:px-8 md:py-6 whitespace-nowrap font-medium text-slate-900 flex items-center">
+                          <span className="w-3 h-3 md:w-5 md:h-5 rounded-full mr-2 md:mr-4 shadow-sm shrink-0" style={{ backgroundColor: item.color }}></span>
+                          <span className="truncate">{item.name}</span>
+                        </td>
+                        <td className="px-4 py-3 md:px-8 md:py-6 whitespace-nowrap text-slate-700 text-right font-medium">
+                          {item.value}
+                        </td>
+                        <td className="px-4 py-3 md:px-8 md:py-6 whitespace-nowrap text-slate-700 text-right font-medium">
+                          {((item.value / totalParticipants) * 100).toFixed(1)}%
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot className="bg-slate-100/80 font-bold text-slate-900 text-base md:text-xl">
+                    <tr>
+                      <td className="px-4 py-3 md:px-8 md:py-6">Total General</td>
+                      <td className="px-4 py-3 md:px-8 md:py-6 text-right">{totalParticipants}</td>
+                      <td className="px-4 py-3 md:px-8 md:py-6 text-right">100%</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
             </div>
           </div>
         );
 
       case "bar":
-        return <CustomBarChart data={GRANDPARENTS_DATA} />;
+        // Charts need specific layout: h-full w-full with NO overflow on the parent to force size
+        return (
+          <div className="h-full w-full p-2 md:p-8 flex flex-col">
+            <CustomBarChart data={GRANDPARENTS_DATA} />
+          </div>
+        );
 
       case "pie":
-        return <CustomPieChart data={GRANDPARENTS_DATA} />;
+        return (
+          <div className="h-full w-full p-2 md:p-8 flex flex-col">
+            <CustomPieChart data={GRANDPARENTS_DATA} />
+          </div>
+        );
 
       case "analysis":
-        return <AnalysisSection data={GRANDPARENTS_DATA} total={totalParticipants} />;
+        return (
+          <div className="h-full w-full p-4 md:p-12 flex flex-col justify-center overflow-y-auto">
+             <AnalysisSection data={GRANDPARENTS_DATA} total={totalParticipants} />
+          </div>
+        );
 
       default:
         return null;
     }
   };
 
+  // Determine if the current slide requires scrolling or should be fixed
+  // Charts ("bar", "pie") generally work best with hidden overflow to force fit
+  const isChartSlide = slides[currentSlide].type === "bar" || slides[currentSlide].type === "pie";
+
   return (
-    <div className="h-screen w-screen bg-slate-900 flex items-center justify-center p-4 md:p-8 overflow-hidden font-sans">
+    // Full screen container
+    <div className="fixed inset-0 w-full h-full bg-slate-50 flex flex-col overflow-hidden font-sans">
       
-      {/* Slide Container (16:9 Aspect Ratio) */}
-      <div className="w-full max-w-6xl aspect-video bg-white rounded-2xl shadow-2xl flex flex-col relative overflow-hidden group">
-        
-        {/* BACKGROUND IMAGE LAYER */}
-        {/* 
-           Ajustes aplicados: 
-           - opacity-25: Aumentada la visibilidad del fondo (antes 15%).
-           - grayscale: Un poco de blanco y negro para que los colores rojos no molesten.
-        */}
-        <div 
-          className="absolute inset-0 z-0 opacity-25 pointer-events-none"
-          style={{
-            backgroundImage: `url('${BACKGROUND_IMAGE_URL}')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'grayscale(40%) contrast(120%)' 
-          }}
-        />
+      {/* BACKGROUND IMAGE LAYER */}
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none transition-opacity duration-1000"
+        style={{
+          backgroundImage: `url('${BACKGROUND_IMAGE_URL}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          filter: 'grayscale(10%) contrast(110%)',
+          opacity: 0.25 
+        }}
+      />
 
-        {/* MAIN CONTENT WRAPPER */}
-        <div className="relative z-10 flex flex-col h-full">
-          
-          {/* Header Strip */}
-          <div className="bg-white/60 backdrop-blur-sm border-b border-white/40 px-8 py-4 flex justify-between items-center h-16 shrink-0 transition-all">
-            <div className="flex items-center space-x-3 text-slate-700">
-              <Presentation className="w-5 h-5 text-blue-600" />
-              <span className="font-semibold text-sm uppercase tracking-wide opacity-70">
-                {slides[currentSlide].title}
-              </span>
-            </div>
-            <div className="text-slate-500 text-sm font-mono bg-white/50 px-2 py-1 rounded">
-              {currentSlide + 1} / {slides.length}
-            </div>
-          </div>
-
-          {/* Content Area */}
-          <div className="flex-grow p-8 md:p-12 overflow-y-auto">
-            {renderSlideContent()}
-          </div>
-
-          {/* Footer Controls */}
-          <div className="bg-white/60 backdrop-blur-sm border-t border-white/40 px-8 py-4 h-16 flex justify-between items-center shrink-0">
-            <div className="flex space-x-1">
-              {slides.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    idx === currentSlide ? 'bg-blue-600 w-8' : 'bg-slate-400 hover:bg-slate-500'
-                  }`}
-                  aria-label={`Ir a diapositiva ${idx + 1}`}
-                />
-              ))}
-            </div>
-
-            <div className="flex space-x-4">
-              <button 
-                onClick={prevSlide}
-                className="p-2 rounded-full hover:bg-white/80 text-slate-600 hover:text-blue-600 transition-colors shadow-sm"
-                title="Anterior (Flecha Izquierda)"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button 
-                onClick={nextSlide}
-                className="p-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-md transition-colors"
-                title="Siguiente (Espacio o Flecha Derecha)"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </div>
-          </div>
-
+      {/* HEADER */}
+      <header className="relative z-20 bg-white/70 backdrop-blur-md border-b border-white/40 px-4 md:px-8 py-3 flex justify-between items-center h-14 md:h-16 shrink-0 shadow-sm">
+        <div className="flex items-center space-x-2 md:space-x-3 text-slate-800">
+          <Presentation className="w-5 h-5 md:w-6 md:h-6 text-blue-700" />
+          <span className="font-bold text-sm md:text-lg uppercase tracking-wide truncate max-w-[200px] md:max-w-none">
+            {slides[currentSlide].title}
+          </span>
         </div>
+        <div className="text-slate-600 text-xs md:text-sm font-bold bg-white/60 px-3 py-1 rounded-full border border-slate-200">
+          {currentSlide + 1} / {slides.length}
+        </div>
+      </header>
 
-      </div>
+      {/* MAIN CONTENT AREA */}
+      {/* 
+        flex-1 ensures it takes all remaining height.
+        isChartSlide ? 'overflow-hidden' : 'overflow-hidden' 
+        We use relative to position content. 
+      */}
+      <main className={`flex-1 relative z-10 w-full flex flex-col ${isChartSlide ? 'overflow-hidden' : 'overflow-hidden'}`}>
+        {renderSlideContent()}
+      </main>
+
+      {/* FOOTER CONTROLS */}
+      <footer className="relative z-20 bg-white/70 backdrop-blur-md border-t border-white/40 px-4 md:px-8 h-16 md:h-20 shrink-0 flex justify-between items-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+         {/* Progress Indicators */}
+         <div className="flex space-x-1.5 md:space-x-3">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`rounded-full transition-all duration-300 shadow-sm ${
+                  idx === currentSlide 
+                    ? 'bg-blue-600 w-8 md:w-12 h-2 md:h-3' 
+                    : 'bg-slate-300 hover:bg-slate-400 w-2 md:w-3 h-2 md:h-3'
+                }`}
+                aria-label={`Ir a diapositiva ${idx + 1}`}
+              />
+            ))}
+          </div>
+
+          <div className="flex space-x-4 md:space-x-6">
+            <button 
+              onClick={prevSlide}
+              className="p-3 md:p-4 rounded-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 shadow-md transition-transform active:scale-95"
+              title="Anterior"
+            >
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+            </button>
+            <button 
+              onClick={nextSlide}
+              className="p-3 md:p-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/30 transition-transform active:scale-95"
+              title="Siguiente"
+            >
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+            </button>
+          </div>
+      </footer>
+
     </div>
   );
 };

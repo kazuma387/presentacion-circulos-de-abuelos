@@ -12,22 +12,27 @@ const AnalysisSection: React.FC<AnalysisProps> = ({ data, total }) => {
   const percentage = ((maxLocation.value / total) * 100).toFixed(1);
 
   return (
-    <div className="bg-white/70 backdrop-blur-md p-8 rounded-xl h-full flex flex-col justify-center border border-white/50 shadow-sm">
-      <div className="prose text-slate-600 max-w-none text-lg leading-relaxed">
-        <p className="mb-6">
-          El análisis de los datos recolectados sobre los <strong>Círculos de Abuelos</strong> muestra una distribución altamente desigual entre las diferentes ubicaciones.
-        </p>
-        <ul className="list-disc pl-8 space-y-4">
-          <li>
-            <strong className="text-blue-600">{maxLocation.name}</strong> es, con diferencia, la ubicación con mayor participación, acumulando un total de <strong>{maxLocation.value}</strong> participantes. Esto representa aproximadamente el <strong>{percentage}%</strong> del total general.
-          </li>
-          <li>
-            Las otras tres ubicaciones (San José, Mariano Parra y José Ramón Yepes) suman en conjunto solo {total - maxLocation.value} participantes, lo que sugiere que la actividad está fuertemente centralizada en {maxLocation.name}.
-          </li>
-          <li>
-            La ubicación con menor participación es <strong>José Ramón Yepes</strong> con solo 3 integrantes registrados.
-          </li>
-        </ul>
+    <div className="w-full max-w-5xl mx-auto h-full flex flex-col justify-center">
+      <div className="bg-white/70 backdrop-blur-md p-6 md:p-10 rounded-2xl border border-white/50 shadow-lg">
+        <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-4">
+          Resumen Ejecutivo
+        </h2>
+        <div className="prose prose-slate max-w-none text-base md:text-2xl leading-relaxed text-slate-700">
+          <p className="mb-6">
+            El análisis de los datos recolectados sobre los <strong>Círculos de Abuelos</strong> muestra una distribución altamente desigual entre las diferentes ubicaciones.
+          </p>
+          <ul className="list-disc pl-6 space-y-4">
+            <li>
+              <strong className="text-blue-700">{maxLocation.name}</strong> es, con diferencia, la ubicación con mayor participación, acumulando un total de <strong>{maxLocation.value}</strong> participantes. Esto representa aproximadamente el <strong>{percentage}%</strong> del total general.
+            </li>
+            <li>
+              Las otras tres ubicaciones (San José, Mariano Parra y José Ramón Yepes) suman en conjunto solo <strong>{total - maxLocation.value}</strong> participantes, lo que sugiere que la actividad está fuertemente centralizada en {maxLocation.name}.
+            </li>
+            <li>
+              La ubicación con menor participación es <strong className="text-amber-600">José Ramón Yepes</strong> con solo 3 integrantes registrados.
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );
