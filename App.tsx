@@ -179,10 +179,6 @@ const App: React.FC = () => {
     }
   };
 
-  // Determine if the current slide requires scrolling or should be fixed
-  // Charts ("bar", "pie") generally work best with hidden overflow to force fit
-  const isChartSlide = slides[currentSlide].type === "bar" || slides[currentSlide].type === "pie";
-
   return (
     // Full screen container
     <div className="fixed inset-0 w-full h-full bg-slate-50 flex flex-col overflow-hidden font-sans">
